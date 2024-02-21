@@ -3,9 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo</title>
+    <title>Todo List</title>
 </head>
 <body>
+    
+    <div class="top">
+        <h1>Todo List</h1>
+    </div>
+    <div class="content">
+
+        <div class="leftBar">
+
+            <div class="tasksPart">
+                <button><p>Inbox</p></button>
+                <button><p>Today</p></button>
+                <button><p>This Week</p></button>
+                <button><p>Add Task</p></button>
+            </div>
+
+            <div class="projectsPart">
+                <h1>Projects</h1>
+                <div class="project">
+                    <p>Gym</p>
+                    <button>*</button>
+                </div>
+                <button>Add Project</button>
+            </div>
+
+        </div>
+
+        <div class="mainPart">
+
+            <div class="taskBlock">
+                <label for="did">
+                    <input type="checkbox" id="checkbox" value="did" />
+                </label>
+                <div class="priority">
+                </div>
+                <div class="text">
+                    <h1>Program today</h1>
+                </div>
+                <h1 class="Trash">Trash</h1>
+            </div>
+
+            <div class="taskBlock">
+                <label for="did">
+                    <input type="checkbox" id="checkbox" value="did" />
+                </label>
+                <div class="priority">
+                </div>
+                <div class="text">
+                    <h1>Program today</h1>
+                </div>
+                <h1 class="Trash">Trash</h1>
+            </div>
+
+            <div class="taskBlock">
+                <label for="did">
+                    <input type="checkbox" id="checkbox" value="did" />
+                </label>
+                <div class="priority">
+                </div>
+                <div class="text">
+                    <h1>Program today</h1>
+                </div>
+                <h1 class="Trash">Trash</h1>
+                <img src=<%=require("../images/foo.png")%> />
+            </div>
+
+        </div>
+
+    </div>
+        
     
     <script src="./main.js"></script>
 </body>
