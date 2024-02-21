@@ -1,1 +1,3 @@
-console.log("workinpm install --save-dev webpackng");
+import ("./style.css")
+import html from "./file.html";
+console.log("working");
