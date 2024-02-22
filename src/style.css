@@ -1,8 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 :root{
     --fontColor: #474942;
     --backgroundColor: #FAF6F0;
     --topColor: #FEC95F;
     --mainColor: #FFEDC6;
+
+    --green: #7ED957;
+    --yellow: #FEC95F;
+    --red: #FF5757;
 }
 html, body{
     height: 100%;
@@ -10,7 +15,6 @@ html, body{
 body{
     background-color: var(--backgroundColor);
     margin: 0;
-    
 }
 .content{
     display: grid;
@@ -64,11 +68,43 @@ body{
     transform: scale(1.01);
     box-shadow: 10px 10px 16px 0px rgba(0, 0, 0, 0.386);
 }
-.taskBlock .Trash{
+.taskBlock .end{
+    display: flex;
+    flex-direction: row;
+    gap: 35px;
+    margin-right: .9375rem;
     margin-left: auto;
 }
+
+.taskBlock .Trash{
+    width: 2.8125rem;
+    transition: transform 130ms;
+    filter: invert(59%) sepia(50%) saturate(3844%) hue-rotate(325deg) brightness(100%) contrast(102%);
+}
+
+.taskBlock .Trash:hover{
+    transform: scale(1.5);
+}
+.taskBlock .Trash:active{
+    filter: invert(0%) sepia(95%) saturate(19%) hue-rotate(282deg) brightness(105%) contrast(104%);
+}
+.taskBlock .date{
+    color: #47494279;
+    font-family: "Nunito Sans", sans-serif;
+}
 .taskBlock .priority{
-    background-color: green;
-    width: 2%;
+    background-color: var(--green);
+    width: 4%;
+    margin-right: .9375rem;
     height: 100%;
+}
+.taskBlock label #checkbox{
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0 1.5625rem;
+    accent-color: var(--topColor);
+}
+.taskBlock .text{
+    color: var(--fontColor);
+    font-family: "Nunito Sans", sans-serif;
 }
