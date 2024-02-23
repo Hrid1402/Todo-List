@@ -12,10 +12,43 @@
 html, body{
     height: 100%;
 }
+
 body{
     background-color: var(--backgroundColor);
     margin: 0;
 }
+#dialog .dialogContent{
+    display: flex;
+    flex-direction: column;
+    padding: 35px 80px;
+}
+#dialog .dialogContent .topDialog{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+#dialog .dialogContent .mainInput{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#dialog .dialogContent .bottomDialog{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.bottomDialog .priority{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.bottomDialog .date{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
 .content{
     display: grid;
     grid-template-columns: 0.2fr 1fr;
@@ -40,6 +73,14 @@ body{
     display: flex;
     flex-direction: column;
 }
+.tasksPart button{
+    display: flex;
+    flex-direction: row;
+}
+.tasksPart button img{
+    width: 2.5rem;
+    height: 2.5rem;
+}
 .projectsPart{
     display: flex;
     flex-direction: column;
@@ -49,13 +90,48 @@ body{
     flex-direction: row;
 }
 
-
-
 .mainPart{
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
     padding: 2.5rem;
 }
+.AllTasks{
+    display: grid;
+    grid-template-rows: 5rem;
+    grid-auto-rows: 5rem;
+    row-gap: 1.25rem;
+}
+.mainPart .addBtn{
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    align-items: center;
+    transition: transform 130ms;
+}
+.mainPart .addBtn:hover{
+    transform: scale(1.1);
+}
+.mainPart .addBtn:active{
+    border-radius: .9375rem;
+    background-color: #fec95f41;
+}
+.mainPart .addBtn p{
+    color: var(--fontColor);
+    font-size: 45px;
+    font-family: "Nunito Sans", sans-serif;
+    padding: 0;
+    margin: 0;
+}
+.mainPart .addBtn img{
+    width: 3.5rem;
+    height: 3.5rem;
+    filter: invert(81%) sepia(95%) saturate(2528%) hue-rotate(312deg) brightness(103%) contrast(100%);
+}
 .taskBlock{
-    height: 10%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: start;
