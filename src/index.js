@@ -10,10 +10,13 @@ const createBTN = document.querySelector("#createBTN");
 const titleValue = document.querySelector("#title");
 const descriptionValue = document.querySelector("#description");
 const dateValue = document.querySelector("#date");
+const lowBTN = document.querySelector("#low");
+const mediumBTN = document.querySelector("#medium");
+const highBTN = document.querySelector("#high");
 
 const allTasks = document.querySelector("#AllTasks");
 let taskList = [];
-
+dialog.showModal();
 addBTN.addEventListener("click",()=>{
     console.log("Add Clicked");
     let today = new Date();
@@ -90,9 +93,6 @@ function createTaskElements(titleValue, descriptionValue, dateValue){
     });
     allTasks.appendChild(taskBlock);
 }
-
-createTaskElements("Mytitle", "Mydescription", "Mydate");
-
 
 class task {
     // class methods

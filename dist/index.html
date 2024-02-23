@@ -14,20 +14,27 @@
     <dialog id="dialog">
         <div class="dialogContent">
             <div class="topDialog">
+                <img id="closeDialog" src="../src/assets/close.svg" alt="x">
                 <h1>New task</h1>
-                <button id="closeDialog">x</button>
             </div>
     
             <div class="mainInput">
-                <h1>Title</h1>
-                <label for="title">
-                    <input type="text" name="title" id="title" autocomplete="off">
-                </label>
+                <div class="titleZone">
+                    <h1>Title</h1>
+                    <label for="title">
+                        <input type="text" name="title" id="title" autocomplete="off">
+                    </label>
+                </div>
+
+                <div class="descriptionZone">
+                    <h1>Description</h1>
+                    <label for="description">
+                        <textarea rows="5" cols="33"id="description" autocomplete="off"></textarea>
+                        
+                    </label>
+                </div>
     
-                <h1>description</h1>
-                <label for="description">
-                    <input type="text" name="description" id="description" autocomplete="off">
-                </label>
+                
     
             </div>
     
@@ -97,91 +104,6 @@
             </button>
 
             <div class="AllTasks" id="AllTasks">
-                
-                <div class="taskBlock">
-                    <label for="did">
-                        <input type="checkbox" id="checkbox" value="did" />
-                    </label>
-                    <div class="priority">
-                    </div>
-                    <div class="text">
-                        <h1>Program today</h1>
-                    </div>
-                    <div class="end">
-                        <div class="date">
-                            <h1>21/02/2024</h1>
-                        </div>
-                        <img class="Trash" id="trashIcon" src="../src/assets/trash.svg" alt="trash"/>
-                    </div>
-                </div>
-
-                <div class="taskBlock">
-                    <label for="did">
-                        <input type="checkbox" id="checkbox" value="did" />
-                    </label>
-                    <div class="priority">
-                    </div>
-                    <div class="text">
-                        <h1>Program today</h1>
-                    </div>
-                    <div class="end">
-                        <div class="date">
-                            <h1>21/02/2024</h1>
-                        </div>
-                        <img class="Trash" id="trashIcon" src="../src/assets/trash.svg" alt="trash"/>
-                    </div>
-                </div>
-
-                <div class="taskBlock">
-                    <label for="did">
-                        <input type="checkbox" id="checkbox" value="did" />
-                    </label>
-                    <div class="priority">
-                    </div>
-                    <div class="text">
-                        <h1>Program today</h1>
-                    </div>
-                    <div class="end">
-                        <div class="date">
-                            <h1>21/02/2024</h1>
-                        </div>
-                        <img class="Trash" id="trashIcon" src="../src/assets/trash.svg" alt="trash"/>
-                    </div>
-                </div>
-
-                <div class="taskBlock">
-                    <label for="did">
-                        <input type="checkbox" id="checkbox" value="did" />
-                    </label>
-                    <div class="priority">
-                    </div>
-                    <div class="text">
-                        <h1>Program today</h1>
-                    </div>
-                    <div class="end">
-                        <div class="date">
-                            <h1>21/02/2024</h1>
-                        </div>
-                        <img class="Trash" id="trashIcon" src="../src/assets/trash.svg" alt="trash"/>
-                    </div>
-                </div>
-
-                <div class="taskBlock">
-                    <label for="did">
-                        <input type="checkbox" id="checkbox" value="did" />
-                    </label>
-                    <div class="priority">
-                    </div>
-                    <div class="text">
-                        <h1>Program today</h1>
-                    </div>
-                    <div class="end">
-                        <div class="date">
-                            <h1>21/02/2024</h1>
-                        </div>
-                        <img class="Trash" id="trashIcon" src="../src/assets/trash.svg" alt="trash"/>
-                    </div>
-                </div>
 
 
             </div>
