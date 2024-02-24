@@ -47,6 +47,9 @@ body{
     width: 35px;
     filter: invert(56%) sepia(74%) saturate(2236%) hue-rotate(324deg) brightness(100%) contrast(101%);
 }
+#dialog .dialogContent .topDialog img:hover{
+    filter: invert(47%) sepia(87%) saturate(7009%) hue-rotate(348deg) brightness(90%) contrast(85%);
+}
 #dialog .dialogContent .topDialog h1{
     margin: 0;
     color: var(--fontColor);
@@ -146,7 +149,7 @@ body{
     border: 2px solid var(--green);
     color: var(--green);
 }
-.bottomDialog .priority .buttons .low:active{
+.bottomDialog .priority .buttons .low:disabled{
     background-color: var(--green);
     color: white;
 }
@@ -156,7 +159,7 @@ body{
     border: 2px solid var(--yellow);
     color: var(--yellow);
 }
-.bottomDialog .priority .buttons .medium:active{
+.bottomDialog .priority .buttons .medium:disabled{
     background-color: var(--yellow);
     color: white;
 }
@@ -166,7 +169,7 @@ body{
     border: 2px solid var(--red);
     color: var(--red);
 }
-.bottomDialog .priority .buttons .high:active{
+.bottomDialog .priority .buttons .high:disabled{
     background-color: var(--red);
     color: white;
 }
@@ -326,7 +329,6 @@ body{
     font-family: "Nunito Sans", sans-serif;
 }
 .taskBlock .priority{
-    background-color: var(--green);
     width: 4%;
     margin-right: 15px;
     height: 100%;
