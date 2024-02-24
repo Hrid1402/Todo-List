@@ -65,7 +65,7 @@ body{
     justify-content: center;
     align-items: start;
     margin-left: 1.5625rem;
-    margin-left: 1.5625rem;
+    margin-right: 2.1875rem;
 }
 
 #dialog .dialogContent .descriptionZone{
@@ -74,7 +74,7 @@ body{
     justify-content: center;
     align-items: start;
     margin-left: 1.5625rem;
-    margin-left: 1.5625rem;
+    margin-right: 2.1875rem;
 }
 
 #dialog .dialogContent .descriptionZone textarea{
@@ -84,9 +84,10 @@ body{
     border: none;
     color: var(--fontColor);
     outline: none;
+    
 }
 #dialog .dialogContent .descriptionZone textarea:focus{
-    border: 3px solid var(--fontColor);
+    border: 2px solid var(--fontColor);
 }
 
 
@@ -97,7 +98,7 @@ body{
     
 }
 #dialog .dialogContent .mainInput label{
-    width: 93%;
+    width: 100%;
 }
 #dialog .dialogContent .mainInput label #title{
     height: 2.8125rem;
@@ -107,25 +108,104 @@ body{
     outline: none;
 }
 #dialog .dialogContent .mainInput label #title:focus{
-    border: 3px solid var(--fontColor);
+    border: 2px solid var(--fontColor);
 }
 #dialog .dialogContent .bottomDialog{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    margin-left: 1.5625rem;
+    margin-right: 2.1875rem;
 }
 .bottomDialog .priority{
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: .35rem;
+    color: var(--fontColor);
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 1.25rem;
 }
+.bottomDialog .priority .buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .2125rem;
+    
+}
+.bottomDialog .priority .buttons button{
+    padding: 2px 3px;
+    font-size: 22px;
+    border-radius: 7px;
+    border: none;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.bottomDialog .priority .buttons .low{
+    background-color: white;
+    border: 2px solid var(--green);
+    color: var(--green);
+}
+.bottomDialog .priority .buttons .low:active{
+    background-color: var(--green);
+    color: white;
+}
+
+.bottomDialog .priority .buttons .medium{
+    background-color: white;
+    border: 2px solid var(--yellow);
+    color: var(--yellow);
+}
+.bottomDialog .priority .buttons .medium:active{
+    background-color: var(--yellow);
+    color: white;
+}
+
+.bottomDialog .priority .buttons .high{
+    background-color: white;
+    border: 2px solid var(--red);
+    color: var(--red);
+}
+.bottomDialog .priority .buttons .high:active{
+    background-color: var(--red);
+    color: white;
+}
+
 .bottomDialog .date{
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: .3125rem;
 }
 
-
+.bottomDialog .date label input{
+    border: none;
+    border-radius: 7px;
+    font-size: 20px;
+    color: var(--fontColor);
+    font-family: "Nunito Sans", sans-serif;
+    padding: 8px 15px;
+    background-color: var(--topColor);
+}
+.create{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.create button{
+    font-size: 36px;
+    color: var(--fontColor);
+    font-family: "Nunito Sans", sans-serif;
+    margin-top: 25px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--topColor);
+}
+.create button:hover{
+    background-color: #e69a03;
+}
 .content{
     display: grid;
     grid-template-columns: 0.2fr 1fr;
