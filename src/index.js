@@ -17,6 +17,7 @@ const highBTN = document.querySelector("#high");
 
 const allTasks = document.querySelector("#AllTasks");
 let taskList = [];
+let globalBottomID = 0;
 
 addBTN.addEventListener("click",()=>{
     console.log("Add Clicked");
@@ -48,7 +49,7 @@ createBTN.addEventListener("click",()=>{
         priority = "high";
     }
     let Task = new task(titleValue.value, descriptionValue.value, dateValue.value, priority)
-    createTaskElements(Task.title, Task.description, Task.date, priority);
+    createTaskElements(Task.title, Task.description, Task.date, priority , Task.id);
     taskList.push(Task);
     console.log(taskList);
     dialog.close();
@@ -80,7 +81,7 @@ closeDialogBTN.addEventListener("click",()=>{
 });
 
 
-function createTaskElements(titleValue, descriptionValue, dateValue, priorityValue){
+function createTaskElements(titleValue, descriptionValue, dateValue, priorityValue, idValue){
     console.log("created!");
     const taskBlock = document.createElement("div");
     const label = document.createElement("label");
@@ -128,9 +129,21 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
     trashIMG.setAttribute("src",trashIconSVG);
     trashIMG.setAttribute("alt","trashIcon");
     trashIMG.setAttribute("id","trashIcon");
+
     trashIMG.addEventListener("click",(eventC)=>{
-        console.log("trashClicked");
         eventC.stopPropagation();
+        const DOMtasks = document.querySelectorAll(".taskBlock");
+        taskList.forEach(task => {
+            if(task.id == idValue){
+                let index = taskList.indexOf(task);
+                console.log("index", index);
+                taskList.splice(index, 1);
+                while (DOMtasks[index].firstChild) {
+                    DOMtasks[index].removeChild(DOMtasks[index].firstChild);
+                }
+                DOMtasks[index].remove();
+            }
+        });
     });
     
     trashIMG.classList.add("Trash");
@@ -152,5 +165,7 @@ class task {
         this.description = description;
         this.date = date;
         this.priority = priority;
+        globalBottomID += 1;
+        this.id = globalBottomID;
     }
 }
