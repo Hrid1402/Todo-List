@@ -17,11 +17,124 @@ body{
     background-color: var(--backgroundColor);
     margin: 0;
 }
-#dialog{
+#description_Dialog{
     border: none;
     padding: 0;
     height: 760px;
     width: 600px;
+}
+#description_Dialog .Content{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--mainColor);
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+}
+#description_Dialog .Content h1{
+    margin: 0;
+    background-color: var(--topColor);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    color: var(--fontColor);
+    padding: .7375rem 0px;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 3.8125rem;
+    padding-left: 3.5625rem;
+    padding-right: 2.1875rem;
+}
+#description_Dialog .Content .middleZone{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 3.5625rem;
+    margin-right: 3.5625rem;
+}
+#description_Dialog .Content .middleZone textarea{
+    resize: none;
+    width: 100%;
+    font-size: 25px;
+    border: none;
+    color: var(--fontColor);
+    outline: none;
+}
+
+#description_Dialog .Content .middleZone textarea:focus{
+    border: 1.8px solid var(--fontColor);
+}
+
+#description_Dialog .bottom{
+    margin-left: 3.5625rem;
+    margin-right: 3.5625rem;
+}
+#description_Dialog .bottom .priorityPart{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: .65rem;
+    color: var(--fontColor);
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 1.25rem;
+}
+#description_Dialog .bottom .priorityPart button{
+    padding: 2px 3px;
+    font-size: 22px;
+    border-radius: 7px;
+    font-family: "Nunito Sans", sans-serif;
+}
+#description_Dialog .bottom .date{
+    color: var(--fontColor);
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+#description_Dialog .bottom .date label input{
+    border: none;
+    border-radius: 7px;
+    font-size: 20px;
+    color: var(--fontColor);
+    font-family: "Nunito Sans", sans-serif;
+    padding: 8px 15px;
+    background-color: var(--topColor);
+}
+#description_Dialog .Close{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#description_Dialog .Close button{
+    font-size: 30px;
+    color: var(--fontColor);
+    font-family: "Nunito Sans", sans-serif;
+    margin-top: 5px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--topColor);
+}
+#description_Dialog .Close button:hover{
+    background-color: #e69a03;
+}
+
+
+/* Creation Dialog*/
+
+
+#dialog{
+    border: none;
+    padding: 0;
+    height: 47.5rem;
+    width: 37.5rem;
 }
 #dialog .dialogContent{
     height: 100%;
@@ -129,14 +242,14 @@ body{
     font-family: "Nunito Sans", sans-serif;
     font-size: 1.25rem;
 }
-.bottomDialog .priority .buttons{
+.bottomDialog .priority .buttons, #description_Dialog .bottom .priorityPart .buttons{
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: .2125rem;
     
 }
-.bottomDialog .priority .buttons button{
+.buttons button{
     padding: 2px 3px;
     font-size: 22px;
     border-radius: 7px;
@@ -144,32 +257,32 @@ body{
     font-family: "Nunito Sans", sans-serif;
 }
 
-.bottomDialog .priority .buttons .low{
+.buttons .low{
     background-color: white;
     border: 2px solid var(--green);
     color: var(--green);
 }
-.bottomDialog .priority .buttons .low:disabled{
+.buttons .low:disabled{
     background-color: var(--green);
     color: white;
 }
 
-.bottomDialog .priority .buttons .medium{
+.buttons .medium{
     background-color: white;
     border: 2px solid var(--yellow);
     color: var(--yellow);
 }
-.bottomDialog .priority .buttons .medium:disabled{
+.buttons .medium:disabled{
     background-color: var(--yellow);
     color: white;
 }
 
-.bottomDialog .priority .buttons .high{
+.buttons .high{
     background-color: white;
     border: 2px solid var(--red);
     color: var(--red);
 }
-.bottomDialog .priority .buttons .high:disabled{
+.buttons .high:disabled{
     background-color: var(--red);
     color: white;
 }
