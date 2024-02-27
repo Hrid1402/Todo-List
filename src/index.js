@@ -22,6 +22,7 @@ let globalBottomID = 0;
 const descriptionDialog = document.querySelector("#description_Dialog");
 const descriptionValue = document.querySelector("#description");
 const closeBTN = document.querySelector("#closeBTN");
+const d_Title_Input = document.querySelector("#d_titleInput");
 const d_Title = document.querySelector("#d_Title");
 const d_description = document.querySelector("#description_D");
 //const d_priority = document.querySelector("#description");
@@ -70,10 +71,11 @@ createBTN.addEventListener("click",()=>{
 function updateTask(){
     //DOM VARS
     const DOMtasks = document.querySelectorAll(".taskBlock");
+    const title = DOMtasks[actualTaskIndex].querySelector(".text h1");
     const date = DOMtasks[actualTaskIndex].querySelector(".end h1");
     const priorityColor = DOMtasks[actualTaskIndex].querySelector(".priority");
     //Obj update
-    taskList[actualTaskIndex].title = d_Title.textContent;
+    taskList[actualTaskIndex].title = d_Title_Input.value;
     taskList[actualTaskIndex].description = d_description.value;
     taskList[actualTaskIndex].date = d_date.value;
     if(D_lowBTN.disabled == true){
@@ -88,6 +90,7 @@ function updateTask(){
     }
     
     //DOM update
+    title.textContent = d_Title_Input.value;
     date.textContent = d_date.value;
     console.log(taskList[actualTaskIndex]);
 
@@ -227,7 +230,7 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
     taskBlock.addEventListener("click",()=>{
         const myIndex = getIndexofElement(idValue);
         descriptionDialog.showModal();
-        d_Title.textContent = titleValue;
+        d_Title_Input.value = taskList[myIndex].title;
         d_description.textContent = taskList[myIndex].description;
         d_date.value = taskList[myIndex].date;
         actualTaskIndex = myIndex;
