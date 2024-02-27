@@ -4,7 +4,6 @@ console.log("working");
 
 const addBTN = document.querySelector("#addBTN");
 const dialog = document.querySelector("#dialog");
-const descriptionDialog = document.querySelector("#description_Dialog");
 const closeDialogBTN = document.querySelector("#closeDialog");
 const createBTN = document.querySelector("#createBTN");
 
@@ -20,18 +19,18 @@ let taskList = [];
 let globalBottomID = 0;
 
 //DESCRIIPTION PART
+const descriptionDialog = document.querySelector("#description_Dialog");
 const descriptionValue = document.querySelector("#description");
 const closeBTN = document.querySelector("#closeBTN");
 const d_Title = document.querySelector("#d_Title");
 const d_description = document.querySelector("#description_D");
-const d_priority = document.querySelector("#description");
+//const d_priority = document.querySelector("#description");
 const d_date = document.querySelector("#date_D");
 const D_lowBTN = document.querySelector("#low_D");
 const D_mediumBTN = document.querySelector("#medium_D");
 const D_highBTN = document.querySelector("#high_D");
+let actualTaskIndex = -1;
 
-
-//ADD
 addBTN.addEventListener("click",()=>{
     console.log("Add Clicked");
     enablePriorityButtons();
@@ -43,7 +42,7 @@ addBTN.addEventListener("click",()=>{
     dateValue.value = todayInFormat;
     dialog.showModal();
 });
-//CREATE
+
 createBTN.addEventListener("click",()=>{
     console.log("Created!");
 
@@ -67,13 +66,41 @@ createBTN.addEventListener("click",()=>{
     console.log(taskList);
     dialog.close();
 });
-closeBTN.addEventListener("click",()=>{
+//update task!!!!!!!!!!
+function updateTask(){
+    //DOM VARS
+    const DOMtasks = document.querySelectorAll(".taskBlock");
+    const date = DOMtasks[actualTaskIndex].querySelector(".end h1");
+    const priorityColor = DOMtasks[actualTaskIndex].querySelector(".priority");
+    //Obj update
+    taskList[actualTaskIndex].title = d_Title.textContent;
+    taskList[actualTaskIndex].description = d_description.value;
+    taskList[actualTaskIndex].date = d_date.value;
+    if(D_lowBTN.disabled == true){
+        taskList[actualTaskIndex].priority = "low";
+        priorityColor.style.backgroundColor = "#7ED957";
+    } else if (D_mediumBTN.disabled == true){
+        taskList[actualTaskIndex].priority = "medium";
+        priorityColor.style.backgroundColor = "#FEC95F";
+    } else{
+        taskList[actualTaskIndex].priority = "high";
+        priorityColor.style.backgroundColor = "#FF5757";
+    }
     
+    //DOM update
+    date.textContent = d_date.value;
+    console.log(taskList[actualTaskIndex]);
+
+    
+}
+
+
+closeBTN.addEventListener("click",()=>{
+    updateTask();
     descriptionDialog.close();
 });
 
 function enablePriorityButtons(){
-    //MainOnes
     lowBTN.disabled = false;
     mediumBTN.disabled = false;
     highBTN.disabled = false;
@@ -82,7 +109,7 @@ function enablePriorityButtons(){
     D_mediumBTN.disabled = false;
     D_highBTN.disabled = false;
 };
-//Main Priority buttons
+//btns--------------------------------------------------------
 lowBTN.addEventListener("click",()=>{
     enablePriorityButtons();
     lowBTN.disabled = true;
@@ -97,8 +124,7 @@ highBTN.addEventListener("click",()=>{
     enablePriorityButtons();
     highBTN.disabled = true;
 });
-//Description Priority Buttons
-
+//btns
 D_lowBTN.addEventListener("click",()=>{
     enablePriorityButtons();
     D_lowBTN.disabled = true;
@@ -113,10 +139,11 @@ D_highBTN.addEventListener("click",()=>{
     enablePriorityButtons();
     D_highBTN.disabled = true;
 });
-//CLOSE MAIN DIALOG
+//---------------------------------------------------------------
 closeDialogBTN.addEventListener("click",()=>{
     dialog.close();
 });
+
 //GET INDEX
 function getIndexofElement(element){
     for (let i = 0; i < taskList.length; i++) {
@@ -196,16 +223,15 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
     end.appendChild(trashIMG);
     end.classList.add("end");
     taskBlock.appendChild(end);
-    //CLICK THE BLOCK
+    //BLOCK click
     taskBlock.addEventListener("click",()=>{
-        console.log("taskBlockClicked");
+        const myIndex = getIndexofElement(idValue);
         descriptionDialog.showModal();
-        console.log("Tile: " + titleValue);
         d_Title.textContent = titleValue;
-        d_description.textContent = descriptionValue;
-        console.log(dateValue);
-        d_date.value = dateValue;
-        console.log(priorityValue);
+        d_description.textContent = taskList[myIndex].description;
+        d_date.value = taskList[myIndex].date;
+        actualTaskIndex = myIndex;
+        console.log("taskBlockClicked");
     });
 
     allTasks.appendChild(taskBlock);
