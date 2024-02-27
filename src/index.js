@@ -23,7 +23,7 @@ const descriptionDialog = document.querySelector("#description_Dialog");
 const descriptionValue = document.querySelector("#description");
 const closeBTN = document.querySelector("#closeBTN");
 const d_Title_Input = document.querySelector("#d_titleInput");
-const d_Title = document.querySelector("#d_Title");
+
 const d_description = document.querySelector("#description_D");
 //const d_priority = document.querySelector("#description");
 const d_date = document.querySelector("#date_D");
@@ -67,6 +67,15 @@ createBTN.addEventListener("click",()=>{
     console.log(taskList);
     dialog.close();
 });
+//date format
+function formatDate(inputDate) {
+    // Separar el input en año, mes y día
+    const parts = inputDate.split('-');
+    // Formatear la fecha en el nuevo formato
+    var formattedDate = parts[2] + '/' + parts[1] + '/' + parts[0];
+
+    return formattedDate;
+}
 //update task!!!!!!!!!!
 function updateTask(){
     //DOM VARS
@@ -91,7 +100,7 @@ function updateTask(){
     
     //DOM update
     title.textContent = d_Title_Input.value;
-    date.textContent = d_date.value;
+    date.textContent = formatDate(d_date.value);
     console.log(taskList[actualTaskIndex]);
 
     
@@ -200,7 +209,7 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
     H1text.textContent = titleValue;
     text.appendChild(H1text)
     taskBlock.appendChild(text);
-    H1date.textContent = dateValue;
+    H1date.textContent = formatDate(dateValue);
     date.appendChild(H1date);
     date.classList.add("date");
 
