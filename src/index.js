@@ -87,6 +87,7 @@ function updateTask(){
     taskList[actualTaskIndex].title = d_Title_Input.value;
     taskList[actualTaskIndex].description = d_description.value;
     taskList[actualTaskIndex].date = d_date.value;
+
     if(D_lowBTN.disabled == true){
         taskList[actualTaskIndex].priority = "low";
         priorityColor.style.backgroundColor = "#7ED957";
@@ -101,7 +102,6 @@ function updateTask(){
     //DOM update
     title.textContent = d_Title_Input.value;
     date.textContent = formatDate(d_date.value);
-    console.log(taskList[actualTaskIndex]);
 
     
 }
@@ -197,7 +197,7 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
         //yellow
         D_mediumBTN.disabled = true;
         priority.style.backgroundColor = "#FEC95F";
-    }else if(priorityValue == "high"){
+    }else{
         //red
         D_highBTN.disabled = true;
         priority.style.backgroundColor = "#FF5757";
@@ -244,8 +244,8 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
         d_date.value = taskList[myIndex].date;
         actualTaskIndex = myIndex;
         console.log("taskBlockClicked");
+        console.log(taskList[myIndex]);
     });
-
     allTasks.appendChild(taskBlock);
 }
 
