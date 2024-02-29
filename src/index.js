@@ -1,5 +1,6 @@
 import ("./style.css")
 import trashIconSVG from "../src/assets/trash.svg"
+import threeDotsSVG from "../src/assets/threeDots.svg"
 console.log("working");
 
 const addBTN = document.querySelector("#addBTN");
@@ -18,6 +19,8 @@ const allTasks = document.querySelector("#AllTasks");
 let taskList = [];
 let globalBottomID = 0;
 
+let projectManager = new ProjectsManager;
+
 //DESCRIIPTION PART
 const descriptionDialog = document.querySelector("#description_Dialog");
 const descriptionValue = document.querySelector("#description");
@@ -30,8 +33,43 @@ const d_date = document.querySelector("#date_D");
 const D_lowBTN = document.querySelector("#low_D");
 const D_mediumBTN = document.querySelector("#medium_D");
 const D_highBTN = document.querySelector("#high_D");
+//Projects
+const allProjects = document.querySelector("#allProjects");
+const addProjectBTN = document.querySelector("#addProject");
+
+let d_priority = "";
 let actualTaskIndex = -1;
 
+
+//Projects stuff
+function createProject(projectName){
+    //DOM
+    const projectDiv = document.createElement("div");
+    const projectButton = document.createElement("button");
+    const pText = document.createElement("p");
+    const threeDots = document.createElement("img");
+
+    projectDiv.appendChild(projectButton);
+    pText.textContent = projectName;
+
+    projectButton.appendChild(pText);
+
+    threeDots.setAttribute("src", threeDotsSVG);
+    threeDots.setAttribute("alt", "config");
+    projectButton.appendChild(threeDots);
+
+    projectDiv.classList.add("project");
+
+    allProjects.insertBefore(projectDiv, addProjectBTN);
+
+}
+addProjectBTN.addEventListener("click",()=>{
+    console.log("add Project Clicked");
+    createProject("x");
+});
+
+
+//Tasks stuff----------------------------------
 addBTN.addEventListener("click",()=>{
     console.log("Add Clicked");
     enablePriorityButtons();
@@ -45,20 +83,15 @@ addBTN.addEventListener("click",()=>{
 });
 
 createBTN.addEventListener("click",()=>{
-    console.log("Created!");
-
     let priority = "low";
     if(lowBTN.disabled == true){
-        console.log("low Selected");
         //green
         priority = "low";
     }
     else if (mediumBTN.disabled == true){
-        console.log("medium Selected");
         priority = "medium";
     }
     else if (highBTN.disabled == true){
-        console.log("high Selected");
         priority = "high";
     }
     let Task = new task(titleValue.value, descriptionValue.value, dateValue.value, priority)
@@ -91,10 +124,12 @@ function updateTask(){
     if(D_lowBTN.disabled == true){
         taskList[actualTaskIndex].priority = "low";
         priorityColor.style.backgroundColor = "#7ED957";
+
     } else if (D_mediumBTN.disabled == true){
         taskList[actualTaskIndex].priority = "medium";
         priorityColor.style.backgroundColor = "#FEC95F";
-    } else{
+
+    } else if (D_highBTN.disabled == true){
         taskList[actualTaskIndex].priority = "high";
         priorityColor.style.backgroundColor = "#FF5757";
     }
@@ -241,8 +276,23 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
         descriptionDialog.showModal();
         d_Title_Input.value = taskList[myIndex].title;
         d_description.textContent = taskList[myIndex].description;
+        d_priority = priorityValue;	
         d_date.value = taskList[myIndex].date;
         actualTaskIndex = myIndex;
+        //
+        enablePriorityButtons();
+        if(taskList[myIndex].priority == "low"){
+        //green
+        D_lowBTN.disabled = true;
+        }else if(taskList[myIndex].priority == "medium"){
+            //yellow
+        D_mediumBTN.disabled = true;
+        }else if (taskList[myIndex].priority == "high"){
+            //red
+        D_highBTN.disabled = true;
+        }
+
+        //
         console.log("taskBlockClicked");
         console.log(taskList[myIndex]);
     });
@@ -259,5 +309,21 @@ class task {
         this.priority = priority;
         globalBottomID += 1;
         this.id = globalBottomID;
+    }
+}
+//project
+class ProjectsManager{
+    // class methods
+    
+    constructor(projectName)
+    {
+        this.projects = [];
+        this.projectsTasks = [];
+        this.projectNamee = projectName;
+    }
+
+    addProject(projectName){
+        this.projects.push(projectName);
+        this.projectsTasks.push("no idea");
     }
 }

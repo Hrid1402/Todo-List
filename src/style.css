@@ -336,7 +336,7 @@ body{
 }
 .content{
     display: grid;
-    grid-template-columns: 0.2fr 1fr;
+    grid-template-columns: 0.23fr 1fr;
     height: 100%;
 }
 .content .leftBar{
@@ -368,7 +368,6 @@ body{
     align-items: center;
     background-color: rgba(0, 0, 0, 0);
     border: 1px solid rgb(27, 18, 1);
-    
 }
 .tasksPart button:hover{
     background-color: rgba(255, 205, 3, 0.19);
@@ -419,8 +418,8 @@ body{
     margin: 0;
 }
 .addProject img{
-    width: 45px;
-    height: 45px;
+    width: 2.8125rem;
+    height: 2.8125rem;
 }
 /*   */
 .project button{
@@ -445,8 +444,11 @@ body{
     margin: 0;
 }
 .project button img{
-    width: 55px;
-    height: 55px;
+    width: 3.7375rem;
+    height: 3.7375rem;
+}
+.project button img:hover{
+    filter: invert(23%) sepia(95%) saturate(742%) hue-rotate(341deg) brightness(93%) contrast(86%);
 }
 
 
