@@ -354,8 +354,23 @@ body{
     margin: 0;
 }
 .mainPart{
+    padding: 20px 40px;
     grid-column: 2/3;
     background-color: var(--backgroundColor);
+    
+}
+.mainPart .topPart{
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.mainPart .topPart h1{
+    display: flex;
+    align-items: center;
+    color: #4749428e;
+    font-size: 4.1125rem;
+    font-family: "Nunito Sans", sans-serif;
+    margin: 0;
 }
 .tasksPart{
     display: flex;
@@ -428,14 +443,12 @@ body{
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    background-color: #dedbd4;
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 25px;
 }
-.project button:hover{
-    
-    background-color: #c7c4bc;
+.project button:disabled{
+    background-color: #1f1f1f7d;
 }
 .project button p{
     color: var(--fontColor);
@@ -452,17 +465,12 @@ body{
 }
 
 
-.mainPart{
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    padding: 40px;
-}
+
 .AllTasks{
     display: grid;
     grid-template-rows: 80px;
     grid-auto-rows: 80px;
-    row-gap: 20px;
+    row-gap: 25px;
 }
 .mainPart .addBtn{
     border: none;

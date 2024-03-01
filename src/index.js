@@ -36,19 +36,37 @@ const D_highBTN = document.querySelector("#high_D");
 //Projects
 const allProjects = document.querySelector("#allProjects");
 const addProjectBTN = document.querySelector("#addProject");
+const projectDialog = document.querySelector("#projectDialog");
+const projectNameInput = document.querySelector("#P_name");
+const dialogCreateProject = document.querySelector("#createProject");
+const actualProjectText = document.querySelector("#actualProjectText");
 
 let d_priority = "";
+let actualProjectIndex = -1;
 let actualTaskIndex = -1;
 
+createProject("Main");
 
 //Projects stuff
 function createProject(projectName){
     //DOM
+    let projectIndex = actualProjectIndex + 1;
+    actualProjectIndex++;
     const projectDiv = document.createElement("div");
     const projectButton = document.createElement("button");
     const pText = document.createElement("p");
     const threeDots = document.createElement("img");
+    projectButton.setAttribute("id", "projectButton");
 
+    projectButton.addEventListener("click",()=>{
+        const projects = document.querySelectorAll("#projectButton")
+        projects.forEach(element => {
+            element.disabled = false;   
+        });
+        projectButton.disabled = true;
+        actualProjectText.textContent = projectName;
+    });
+    
     projectDiv.appendChild(projectButton);
     pText.textContent = projectName;
 
@@ -56,19 +74,31 @@ function createProject(projectName){
 
     threeDots.setAttribute("src", threeDotsSVG);
     threeDots.setAttribute("alt", "config");
+
+    threeDots.addEventListener("click",(e)=>{
+        console.log("dots");
+        e.stopPropagation();
+    });
+
     projectButton.appendChild(threeDots);
 
     projectDiv.classList.add("project");
-
+    projectDiv.setAttribute("id", "project");
     allProjects.insertBefore(projectDiv, addProjectBTN);
 
 }
 addProjectBTN.addEventListener("click",()=>{
     console.log("add Project Clicked");
-    createProject("x");
+    projectNameInput.value = "";
+    projectDialog.showModal();
 });
 
-
+dialogCreateProject.addEventListener("click",()=>{
+    createProject(projectNameInput.value);
+    projectManager.addProject(projectNameInput.value);
+    console.log(projectManager.projects);
+    projectDialog.close()
+});
 //Tasks stuff----------------------------------
 addBTN.addEventListener("click",()=>{
     console.log("Add Clicked");
@@ -315,11 +345,10 @@ class task {
 class ProjectsManager{
     // class methods
     
-    constructor(projectName)
+    constructor()
     {
         this.projects = [];
         this.projectsTasks = [];
-        this.projectNamee = projectName;
     }
 
     addProject(projectName){
