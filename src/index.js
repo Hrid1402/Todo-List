@@ -28,7 +28,6 @@ const closeBTN = document.querySelector("#closeBTN");
 const d_Title_Input = document.querySelector("#d_titleInput");
 
 const d_description = document.querySelector("#description_D");
-//const d_priority = document.querySelector("#description");
 const d_date = document.querySelector("#date_D");
 const D_lowBTN = document.querySelector("#low_D");
 const D_mediumBTN = document.querySelector("#medium_D");
@@ -40,18 +39,63 @@ const projectDialog = document.querySelector("#projectDialog");
 const projectNameInput = document.querySelector("#P_name");
 const dialogCreateProject = document.querySelector("#createProject");
 const actualProjectText = document.querySelector("#actualProjectText");
+let globalProjectsIds = -1;
 
-let d_priority = "";
+
+
 let actualProjectIndex = -1;
 let actualTaskIndex = -1;
 
+//MainDefaultProject
 createProject("Main");
+const mainbuttonjustforselect = document.querySelector("#projectButton").disabled = true;
+actualProjectText.textContent = "Main";
 
+
+
+//Ceate full DOM from array
+
+/*
+let objetoEjemplo1 = {
+    title: "Study",
+    description: "Study Math, obviously",
+    date: "2024-03-05",
+    priority: "high",
+    id: "0"
+};
+let objetoEjemplo2 = {
+    title: "Example 2",
+    description: "descripcion ejemplo",
+    date: "2024-03-01",
+    priority: "low",
+    id: "1"
+};
+let objetoEjemplo3 = {
+    title: "LOL",
+    description: "descripcion ejemplo descripcion ejemplo",
+    date: "2025-03-01",
+    priority: "medium",
+    id: "2"
+};
+let exampleArray = [objetoEjemplo1, objetoEjemplo2, objetoEjemplo3];
+
+function createTaskFromArray(exampleArray){
+    exampleArray.forEach(taskObj => {
+        createTaskElements(taskObj.title, taskObj.description, taskObj.date, taskObj.priority,taskObj.id);
+    });
+    
+}
+
+createTaskFromArray(exampleArray);
+*/
 //Projects stuff
+function getIndexOfProject(projectID){
+
+}
 function createProject(projectName){
     //DOM
-    let projectIndex = actualProjectIndex + 1;
-    actualProjectIndex++;
+    let projectId = globalProjectsIds + 1;
+    globalProjectsIds++;
     const projectDiv = document.createElement("div");
     const projectButton = document.createElement("button");
     const pText = document.createElement("p");
@@ -61,9 +105,10 @@ function createProject(projectName){
     projectButton.addEventListener("click",()=>{
         const projects = document.querySelectorAll("#projectButton")
         projects.forEach(element => {
-            element.disabled = false;   
+            element.disabled = false;
         });
         projectButton.disabled = true;
+        actualProjectIndex = 0;
         actualProjectText.textContent = projectName;
     });
     
@@ -85,6 +130,7 @@ function createProject(projectName){
     projectDiv.classList.add("project");
     projectDiv.setAttribute("id", "project");
     allProjects.insertBefore(projectDiv, addProjectBTN);
+    projectManager.projectsTasks.push([]);
 
 }
 addProjectBTN.addEventListener("click",()=>{
@@ -96,7 +142,6 @@ addProjectBTN.addEventListener("click",()=>{
 dialogCreateProject.addEventListener("click",()=>{
     createProject(projectNameInput.value);
     projectManager.addProject(projectNameInput.value);
-    console.log(projectManager.projects);
     projectDialog.close()
 });
 //Tasks stuff----------------------------------
@@ -124,10 +169,13 @@ createBTN.addEventListener("click",()=>{
     else if (highBTN.disabled == true){
         priority = "high";
     }
+
     let Task = new task(titleValue.value, descriptionValue.value, dateValue.value, priority)
     createTaskElements(Task.title, Task.description, Task.date, priority , Task.id);
     taskList.push(Task);
-    console.log(taskList);
+    projectManager.projectsTasks[0].push(Task);
+    console.log("PropjectManager:", projectManager.projectsTasks);
+    console.log("taskList:", taskList);
     dialog.close();
 });
 //date format
@@ -306,7 +354,6 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
         descriptionDialog.showModal();
         d_Title_Input.value = taskList[myIndex].title;
         d_description.textContent = taskList[myIndex].description;
-        d_priority = priorityValue;	
         d_date.value = taskList[myIndex].date;
         actualTaskIndex = myIndex;
         //
@@ -353,6 +400,5 @@ class ProjectsManager{
 
     addProject(projectName){
         this.projects.push(projectName);
-        this.projectsTasks.push("no idea");
     }
 }
