@@ -44,6 +44,7 @@ const actualProjectText = document.querySelector("#actualProjectText");
 const dialogEditProject = document.querySelector("#editProjectDialog");
 const E_dialogText = document.querySelector("#EP_name");
 const EP_close = document.querySelector("#EP_close");
+const EP_delete =document.querySelector("#EP_delete");
 
 let actualProjectIndex = -1;
 let actualTaskIndex = -1;
@@ -82,11 +83,50 @@ function getIndexOfclickedProject(){
         };
     };
 };
-
+function selectMainProject(){
+    const projects = document.querySelectorAll("#projectButton");
+    const MainProject = document.querySelector("#project button");
+    projects.forEach(element => {
+        element.disabled = false;
+    });
+    MainProject.disabled = true;
+    actualProjectText.textContent = "Main";
+    actualProjectIndex = 0;
+    createTaskFromArray(projectManager.projectsTasks[getIndexOfProject()]);
+}
 EP_close.addEventListener("click",()=> {
     updateProject();
     dialogEditProject.close();
 });
+EP_delete.addEventListener("click",()=> {
+    console.log("delete");
+    console.log(projectManager.projects);
+    deleteProject();
+    console.log(allProjects);
+    dialogEditProject.close();
+});
+function deleteProject(){
+    //DOM
+    const myProjectIndex = getIndexOfclickedProject()
+    const allProjects = document.querySelectorAll("#project");
+    if(myProjectIndex == getIndexOfProject()){
+        console.log("Same");
+        deleteAllTasksFromDom();
+        selectMainProject();
+    } 
+    while(allProjects[myProjectIndex].firstChild) {
+        allProjects[myProjectIndex].removeChild(allProjects[myProjectIndex].firstChild);
+    };
+    allProjects[myProjectIndex].remove();
+    console.log("IndexOfproject");
+    console.log(getIndexOfProject());
+    console.log("myProjectIndex");
+    console.log(myProjectIndex);
+    
+    projectManager.deleteProject(myProjectIndex);
+    console.log(projectManager.projects);
+    
+}
 
 function updateProject(){
     console.log("Project Updated");
@@ -121,6 +161,7 @@ function createProject(projectName){
     
     projectDiv.appendChild(projectButton);
     pText.textContent = projectName;
+    projectManager.addProject(projectName);
 
     projectButton.appendChild(pText);
 
@@ -152,7 +193,6 @@ addProjectBTN.addEventListener("click",()=>{
 
 dialogCreateProject.addEventListener("click",()=>{
     createProject(projectNameInput.value);
-    projectManager.addProject(projectNameInput.value);
     projectDialog.close()
 });
 //Tasks stuff----------------------------------
@@ -185,7 +225,7 @@ createBTN.addEventListener("click",()=>{
     createTaskElements(Task.title, Task.description, Task.date, priority);
     taskList.push(Task);
     projectManager.projectsTasks[getIndexOfProject()].push(Task);
-    console.log("PropjectManager:", projectManager.projectsTasks);
+    console.log("ProjectManager:", projectManager.projectsTasks);
     dialog.close();
 });
 //date format
@@ -419,5 +459,9 @@ class ProjectsManager{
 
     addProject(projectName){
         this.projects.push(projectName);
+    }
+    deleteProject(index){
+        this.projects.splice(index, 1); 
+        this.projectsTasks.splice(index, 1); 
     }
 }
