@@ -1,7 +1,7 @@
 import ("./style.css")
 import trashIconSVG from "../src/assets/trash.svg"
 import threeDotsSVG from "../src/assets/threeDots.svg"
-console.log("workinga");
+console.log("working");
 
 const addBTN = document.querySelector("#addBTN");
 const dialog = document.querySelector("#dialog");
@@ -41,6 +41,9 @@ const projectNameInput = document.querySelector("#P_name");
 const dialogCreateProject = document.querySelector("#createProject");
 const actualProjectText = document.querySelector("#actualProjectText");
 
+const dialogEditProject = document.querySelector("#editProjectDialog");
+const E_dialogText = document.querySelector("#EP_name");
+const EP_close = document.querySelector("#EP_close");
 
 let actualProjectIndex = -1;
 let actualTaskIndex = -1;
@@ -50,59 +53,52 @@ createProject("Main");
 const mainbuttonjustforselect = document.querySelector("#projectButton").disabled = true;
 actualProjectText.textContent = "Main";
 
-
-
 //Ceate full DOM from array
-
-/*
-let objetoEjemplo1 = {
-    title: "Study",
-    description: "Study Math, obviously",
-    date: "2024-03-05",
-    priority: "high",
-    id: "0"
-};
-let objetoEjemplo2 = {
-    title: "Example 2",
-    description: "descripcion ejemplo",
-    date: "2024-03-01",
-    priority: "low",
-    id: "1"
-};
-let objetoEjemplo3 = {
-    title: "LOL",
-    description: "descripcion ejemplo descripcion ejemplo",
-    date: "2025-03-01",
-    priority: "medium",
-    id: "2"
-};
-let exampleArray = [objetoEjemplo1, objetoEjemplo2, objetoEjemplo3];
-
-
-
-createTaskFromArray(exampleArray);
-*/
-
 function createTaskFromArray(exampleArray){
     exampleArray.forEach(taskObj => {
         createTaskElements(taskObj.title, taskObj.description, taskObj.date, taskObj.priority);
     });
     
-}
+};
 function deleteAllTasksFromDom(){
     while(allTasks.firstChild) {
             allTasks.removeChild(allTasks.firstChild);
-        }
-}
+        };
+};
 //Projects stuff
 function getIndexOfProject(){
     const projects = document.querySelectorAll("#projectButton")
     for (let i = 0; i < projects.length; i++){
         if(projects[i].disabled == true){
             return i;
-        }
-    }
-}
+        };
+    };
+};
+function getIndexOfclickedProject(){
+    const projects = document.querySelectorAll("#projectButton")
+    for (let i = 0; i < projects.length; i++){
+        if(projects[i].className == "clicked"){
+            return i;
+        };
+    };
+};
+
+EP_close.addEventListener("click",()=> {
+    updateProject();
+    dialogEditProject.close();
+});
+
+function updateProject(){
+    console.log("Project Updated");
+    const projects = document.querySelectorAll("#projectButton");
+
+    //index of actually selected Project
+    const text = projects[getIndexOfclickedProject()].querySelector("p");
+    projects[getIndexOfclickedProject()].removeAttribute('class');
+    text.textContent = E_dialogText.value;
+    actualProjectText.textContent = E_dialogText.value;
+};
+
 function createProject(projectName){
     //DOM
     const projectDiv = document.createElement("div");
@@ -132,7 +128,11 @@ function createProject(projectName){
     threeDots.setAttribute("alt", "config");
 
     threeDots.addEventListener("click",(e)=>{
-        console.log("dots");
+        projectButton.classList.add("clicked");
+        projectDiv.list
+        console.log(pText.textContent);
+        dialogEditProject.showModal();
+        E_dialogText.value = pText.textContent;
         e.stopPropagation();
     });
 
@@ -143,7 +143,7 @@ function createProject(projectName){
     allProjects.insertBefore(projectDiv, addProjectBTN);
     projectManager.projectsTasks.push([]);
 
-}
+};
 addProjectBTN.addEventListener("click",()=>{
     console.log("add Project Clicked");
     projectNameInput.value = "";
