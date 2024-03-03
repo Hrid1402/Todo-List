@@ -1,7 +1,7 @@
 import ("./style.css")
 import trashIconSVG from "../src/assets/trash.svg"
 import threeDotsSVG from "../src/assets/threeDots.svg"
-console.log("working");
+console.log("workinga");
 
 const addBTN = document.querySelector("#addBTN");
 const dialog = document.querySelector("#dialog");
@@ -16,6 +16,7 @@ const mediumBTN = document.querySelector("#medium");
 const highBTN = document.querySelector("#high");
 
 const allTasks = document.querySelector("#AllTasks");
+
 let taskList = [];
 let globalBottomID = 0;
 
@@ -39,8 +40,6 @@ const projectDialog = document.querySelector("#projectDialog");
 const projectNameInput = document.querySelector("#P_name");
 const dialogCreateProject = document.querySelector("#createProject");
 const actualProjectText = document.querySelector("#actualProjectText");
-let globalProjectsIds = -1;
-
 
 
 let actualProjectIndex = -1;
@@ -79,23 +78,33 @@ let objetoEjemplo3 = {
 };
 let exampleArray = [objetoEjemplo1, objetoEjemplo2, objetoEjemplo3];
 
-function createTaskFromArray(exampleArray){
-    exampleArray.forEach(taskObj => {
-        createTaskElements(taskObj.title, taskObj.description, taskObj.date, taskObj.priority,taskObj.id);
-    });
-    
-}
+
 
 createTaskFromArray(exampleArray);
 */
-//Projects stuff
-function getIndexOfProject(projectID){
 
+function createTaskFromArray(exampleArray){
+    exampleArray.forEach(taskObj => {
+        createTaskElements(taskObj.title, taskObj.description, taskObj.date, taskObj.priority);
+    });
+    
+}
+function deleteAllTasksFromDom(){
+    while(allTasks.firstChild) {
+            allTasks.removeChild(allTasks.firstChild);
+        }
+}
+//Projects stuff
+function getIndexOfProject(){
+    const projects = document.querySelectorAll("#projectButton")
+    for (let i = 0; i < projects.length; i++){
+        if(projects[i].disabled == true){
+            return i;
+        }
+    }
 }
 function createProject(projectName){
     //DOM
-    let projectId = globalProjectsIds + 1;
-    globalProjectsIds++;
     const projectDiv = document.createElement("div");
     const projectButton = document.createElement("button");
     const pText = document.createElement("p");
@@ -110,6 +119,8 @@ function createProject(projectName){
         projectButton.disabled = true;
         actualProjectIndex = 0;
         actualProjectText.textContent = projectName;
+        deleteAllTasksFromDom();
+        createTaskFromArray(projectManager.projectsTasks[getIndexOfProject()]);
     });
     
     projectDiv.appendChild(projectButton);
@@ -171,11 +182,10 @@ createBTN.addEventListener("click",()=>{
     }
 
     let Task = new task(titleValue.value, descriptionValue.value, dateValue.value, priority)
-    createTaskElements(Task.title, Task.description, Task.date, priority , Task.id);
+    createTaskElements(Task.title, Task.description, Task.date, priority);
     taskList.push(Task);
-    projectManager.projectsTasks[0].push(Task);
+    projectManager.projectsTasks[getIndexOfProject()].push(Task);
     console.log("PropjectManager:", projectManager.projectsTasks);
-    console.log("taskList:", taskList);
     dialog.close();
 });
 //date format
@@ -195,27 +205,29 @@ function updateTask(){
     const date = DOMtasks[actualTaskIndex].querySelector(".end h1");
     const priorityColor = DOMtasks[actualTaskIndex].querySelector(".priority");
     //Obj update
-    taskList[actualTaskIndex].title = d_Title_Input.value;
-    taskList[actualTaskIndex].description = d_description.value;
-    taskList[actualTaskIndex].date = d_date.value;
+
+    projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].title = d_Title_Input.value;
+    projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].description = d_description.value;
+    projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].date = d_date.value;
 
     if(D_lowBTN.disabled == true){
-        taskList[actualTaskIndex].priority = "low";
+        projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].priority = "low";
         priorityColor.style.backgroundColor = "#7ED957";
 
     } else if (D_mediumBTN.disabled == true){
-        taskList[actualTaskIndex].priority = "medium";
+        projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].priority = "medium";
         priorityColor.style.backgroundColor = "#FEC95F";
 
     } else if (D_highBTN.disabled == true){
-        taskList[actualTaskIndex].priority = "high";
+        projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].priority = "high";
         priorityColor.style.backgroundColor = "#FF5757";
     }
     
     //DOM update
     title.textContent = d_Title_Input.value;
     date.textContent = formatDate(d_date.value);
-
+    console.log("updateTask");
+    console.log(projectManager.projectsTasks[getIndexOfProject()]);
     
 }
 
@@ -270,16 +282,17 @@ closeDialogBTN.addEventListener("click",()=>{
 });
 
 //GET INDEX
-function getIndexofElement(element){
-    for (let i = 0; i < taskList.length; i++) {
-        if (taskList[i].id == element) {
-            return taskList.indexOf(taskList[i]);
+function getIndexofElement(){
+    console.log("GET INDEX OF ELEMENT");
+    const tasksBlocks = allTasks.querySelectorAll(".taskBlock");
+    for (let i = 0; i < tasksBlocks.length; i++) {
+        if(tasksBlocks[i].id == "isSelected"){
+            return i;
         }
     }
 }
 //DOOM
-function createTaskElements(titleValue, descriptionValue, dateValue, priorityValue, idValue){
-    console.log("created!");
+function createTaskElements(titleValue, descriptionValue, dateValue, priorityValue){
     const taskBlock = document.createElement("div");
     const label = document.createElement("label");
     const input = document.createElement("input");
@@ -334,13 +347,18 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
         eventC.stopPropagation();
         const DOMtasks = document.querySelectorAll(".taskBlock");
         //getIndex
-        const index = getIndexofElement(idValue);
-        console.log("index", index);
-        taskList.splice(index, 1);
-        while (DOMtasks[index].firstChild) {
-            DOMtasks[index].removeChild(DOMtasks[index].firstChild);
+        taskBlock.setAttribute("id","isSelected");
+
+        const myIndex = getIndexofElement();
+
+        taskBlock.removeAttribute("id");
+
+        projectManager.projectsTasks[getIndexOfProject()].splice(myIndex, 1);
+        while (DOMtasks[myIndex].firstChild) {
+            DOMtasks[myIndex].removeChild(DOMtasks[myIndex].firstChild);
         }
-        DOMtasks[index].remove();
+
+        DOMtasks[myIndex].remove();
     });
     
     trashIMG.classList.add("Trash");
@@ -350,28 +368,30 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
     taskBlock.appendChild(end);
     //BLOCK click
     taskBlock.addEventListener("click",()=>{
-        const myIndex = getIndexofElement(idValue);
+
+        taskBlock.setAttribute("id","isSelected");
+
+        const myIndex = getIndexofElement();
+
+        taskBlock.removeAttribute("id");
+
         descriptionDialog.showModal();
-        d_Title_Input.value = taskList[myIndex].title;
-        d_description.textContent = taskList[myIndex].description;
-        d_date.value = taskList[myIndex].date;
+        d_Title_Input.value = projectManager.projectsTasks[getIndexOfProject()][myIndex].title;
+        d_description.value = projectManager.projectsTasks[getIndexOfProject()][myIndex].description;
+        d_date.value = projectManager.projectsTasks[getIndexOfProject()][myIndex].date;
         actualTaskIndex = myIndex;
         //
         enablePriorityButtons();
-        if(taskList[myIndex].priority == "low"){
+        if(projectManager.projectsTasks[getIndexOfProject()][myIndex].priority == "low"){
         //green
         D_lowBTN.disabled = true;
-        }else if(taskList[myIndex].priority == "medium"){
+        }else if(projectManager.projectsTasks[getIndexOfProject()][myIndex].priority == "medium"){
             //yellow
         D_mediumBTN.disabled = true;
-        }else if (taskList[myIndex].priority == "high"){
+        }else if (projectManager.projectsTasks[getIndexOfProject()][myIndex].priority == "high"){
             //red
         D_highBTN.disabled = true;
         }
-
-        //
-        console.log("taskBlockClicked");
-        console.log(taskList[myIndex]);
     });
     allTasks.appendChild(taskBlock);
 }
@@ -384,8 +404,7 @@ class task {
         this.description = description;
         this.date = date;
         this.priority = priority;
-        globalBottomID += 1;
-        this.id = globalBottomID;
+
     }
 }
 //project
