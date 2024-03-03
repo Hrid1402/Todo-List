@@ -57,7 +57,7 @@ actualProjectText.textContent = "Main";
 //Ceate full DOM from array
 function createTaskFromArray(exampleArray){
     exampleArray.forEach(taskObj => {
-        createTaskElements(taskObj.title, taskObj.description, taskObj.date, taskObj.priority);
+        createTaskElements(taskObj.title, taskObj.description, taskObj.date, taskObj.priority , taskObj.isChecked);
     });
     
 };
@@ -221,8 +221,8 @@ createBTN.addEventListener("click",()=>{
         priority = "high";
     }
 
-    let Task = new task(titleValue.value, descriptionValue.value, dateValue.value, priority)
-    createTaskElements(Task.title, Task.description, Task.date, priority);
+    let Task = new task(titleValue.value, descriptionValue.value, dateValue.value, priority, false)
+    createTaskElements(Task.title, Task.description, Task.date, priority, false);
     taskList.push(Task);
     projectManager.projectsTasks[getIndexOfProject()].push(Task);
     console.log("ProjectManager:", projectManager.projectsTasks);
@@ -249,6 +249,7 @@ function updateTask(){
     projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].title = d_Title_Input.value;
     projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].description = d_description.value;
     projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].date = d_date.value;
+
 
     if(D_lowBTN.disabled == true){
         projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].priority = "low";
@@ -332,7 +333,7 @@ function getIndexofElement(){
     }
 }
 //DOOM
-function createTaskElements(titleValue, descriptionValue, dateValue, priorityValue){
+function createTaskElements(titleValue, descriptionValue, dateValue, priorityValue, isChecked){
     const taskBlock = document.createElement("div");
     const label = document.createElement("label");
     const input = document.createElement("input");
@@ -347,9 +348,28 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
     taskBlock.classList.add("taskBlock");
     input.setAttribute("value","did");
     input.setAttribute("type","checkbox");
+    
+    if(isChecked){
+        input.checked = true;
+    }
     input.setAttribute("id","checkbox");
+    
     input.addEventListener("click",(eventC)=>{
         eventC.stopPropagation();
+        taskBlock.setAttribute("id","isSelected");
+
+        const myIndex = getIndexofElement();
+
+        taskBlock.removeAttribute("id");
+        if(isChecked){
+            projectManager.projectsTasks[getIndexOfProject()][myIndex].isChecked = false;
+            isChecked = false;
+        }else{
+            projectManager.projectsTasks[getIndexOfProject()][myIndex].isChecked = true;
+            isChecked = true;
+        }
+        
+        
     });
     label.appendChild(input);
     taskBlock.appendChild(label);
@@ -438,12 +458,13 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
 
 class task {
     // class methods
-    constructor(title, description, date, priority)
+    constructor(title, description, date, priority, isChecked)
     {
         this.title = title;
         this.description = description;
         this.date = date;
         this.priority = priority;
+        this.isChecked = isChecked;
 
     }
 }

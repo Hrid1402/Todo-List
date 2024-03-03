@@ -372,33 +372,7 @@ body{
     font-family: "Nunito Sans", sans-serif;
     margin: 0;
 }
-.tasksPart{
-    display: flex;
-    flex-direction: column;
-}
-.tasksPart button{
-    padding: 15px 25px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0);
-    border: 1px solid rgb(27, 18, 1);
-}
-.tasksPart button:hover{
-    background-color: rgba(255, 205, 3, 0.19);
-}
-.tasksPart button p{
-    padding-left: 10px;
-    margin: 0;
-    color: var(--fontColor);
-    font-size: 2.5125rem;
-    font-family: "Nunito Sans", sans-serif;
-}
-.tasksPart button img{
-    width: 50px;
-    height: 50px;
-    
-}
+
 .projectsPart{
     display: flex;
     flex-direction: column;
