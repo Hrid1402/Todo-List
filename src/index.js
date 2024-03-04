@@ -52,6 +52,8 @@ let actualTaskIndex = -1;
 //MainDefaultProject
 createProject("Main");
 const mainbuttonjustforselect = document.querySelector("#projectButton").disabled = true;
+const threeDotsDelete = document.querySelector("#projectButton img");
+threeDotsDelete.remove();
 actualProjectText.textContent = "Main";
 
 //Ceate full DOM from array
@@ -96,7 +98,7 @@ function selectMainProject(){
 }
 EP_close.addEventListener("click",()=> {
     updateProject();
-    dialogEditProject.close();
+    
 });
 EP_delete.addEventListener("click",()=> {
     console.log("delete");
@@ -130,13 +132,24 @@ function deleteProject(){
 
 function updateProject(){
     console.log("Project Updated");
-    const projects = document.querySelectorAll("#projectButton");
-
-    //index of actually selected Project
-    const text = projects[getIndexOfclickedProject()].querySelector("p");
-    projects[getIndexOfclickedProject()].removeAttribute('class');
-    text.textContent = E_dialogText.value;
-    actualProjectText.textContent = E_dialogText.value;
+    
+    if(E_dialogText.value.length < 1){
+        alert("Please fill out the field to continue.")
+    }else{
+        const projects = document.querySelectorAll("#projectButton");
+        const MyindexOfClickedProject = getIndexOfclickedProject();
+        //index of actually selected Project
+        const text = projects[MyindexOfClickedProject].querySelector("p");
+        projects[MyindexOfClickedProject].removeAttribute('class');
+        projectManager.projects[MyindexOfClickedProject] = E_dialogText.value;
+        text.textContent = E_dialogText.value;
+        if(getIndexOfProject() == MyindexOfClickedProject) {
+            actualProjectText.textContent = E_dialogText.value;
+        }
+        dialogEditProject.close();
+    }
+    
+    
 };
 
 function createProject(projectName){
@@ -154,7 +167,7 @@ function createProject(projectName){
         });
         projectButton.disabled = true;
         actualProjectIndex = 0;
-        actualProjectText.textContent = projectName;
+        actualProjectText.textContent = projectManager.projects[getIndexOfProject()];
         deleteAllTasksFromDom();
         createTaskFromArray(projectManager.projectsTasks[getIndexOfProject()]);
     });
@@ -192,8 +205,13 @@ addProjectBTN.addEventListener("click",()=>{
 });
 
 dialogCreateProject.addEventListener("click",()=>{
-    createProject(projectNameInput.value);
-    projectDialog.close()
+    if(projectNameInput.value.length < 1){
+        alert("Please fill out the field to continue.")
+    }else{
+        createProject(projectNameInput.value);
+        projectDialog.close();
+    }
+    
 });
 //Tasks stuff----------------------------------
 addBTN.addEventListener("click",()=>{
@@ -220,13 +238,18 @@ createBTN.addEventListener("click",()=>{
     else if (highBTN.disabled == true){
         priority = "high";
     }
-
-    let Task = new task(titleValue.value, descriptionValue.value, dateValue.value, priority, false)
-    createTaskElements(Task.title, Task.description, Task.date, priority, false);
-    taskList.push(Task);
-    projectManager.projectsTasks[getIndexOfProject()].push(Task);
-    console.log("ProjectManager:", projectManager.projectsTasks);
-    dialog.close();
+    if(titleValue.value.length < 1 || descriptionValue.value.length < 1){
+        alert("Please fill out all fields to proceed.");
+    }
+    else{
+        let Task = new task(titleValue.value, descriptionValue.value, dateValue.value, priority, false)
+        createTaskElements(Task.title, Task.description, Task.date, priority, false);
+        taskList.push(Task);
+        projectManager.projectsTasks[getIndexOfProject()].push(Task);
+        console.log("ProjectManager:", projectManager.projectsTasks);
+        dialog.close();
+    }
+    
 });
 //date format
 function formatDate(inputDate) {
@@ -245,37 +268,40 @@ function updateTask(){
     const date = DOMtasks[actualTaskIndex].querySelector(".end h1");
     const priorityColor = DOMtasks[actualTaskIndex].querySelector(".priority");
     //Obj update
-
-    projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].title = d_Title_Input.value;
-    projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].description = d_description.value;
-    projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].date = d_date.value;
-
-
-    if(D_lowBTN.disabled == true){
-        projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].priority = "low";
-        priorityColor.style.backgroundColor = "#7ED957";
-
-    } else if (D_mediumBTN.disabled == true){
-        projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].priority = "medium";
-        priorityColor.style.backgroundColor = "#FEC95F";
-
-    } else if (D_highBTN.disabled == true){
-        projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].priority = "high";
-        priorityColor.style.backgroundColor = "#FF5757";
+    if(d_Title_Input.value.length < 1 || d_description.value.length < 1){
+        alert("Please fill out all fields to proceed.");
     }
-    
-    //DOM update
-    title.textContent = d_Title_Input.value;
-    date.textContent = formatDate(d_date.value);
-    console.log("updateTask");
-    console.log(projectManager.projectsTasks[getIndexOfProject()]);
-    
+    else{
+        projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].title = d_Title_Input.value;
+        projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].description = d_description.value;
+        projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].date = d_date.value;
+
+
+        if(D_lowBTN.disabled == true){
+            projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].priority = "low";
+            priorityColor.style.backgroundColor = "#7ED957";
+
+        } else if (D_mediumBTN.disabled == true){
+            projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].priority = "medium";
+            priorityColor.style.backgroundColor = "#FEC95F";
+
+        } else if (D_highBTN.disabled == true){
+            projectManager.projectsTasks[getIndexOfProject()][actualTaskIndex].priority = "high";
+            priorityColor.style.backgroundColor = "#FF5757";
+        }
+        
+        //DOM update
+        title.textContent = d_Title_Input.value;
+        date.textContent = formatDate(d_date.value);
+        console.log("updateTask");
+        console.log(projectManager.projectsTasks[getIndexOfProject()]);
+        descriptionDialog.close();
+    }
 }
 
 
 closeBTN.addEventListener("click",()=>{
     updateTask();
-    descriptionDialog.close();
 });
 
 function enablePriorityButtons(){

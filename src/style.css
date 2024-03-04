@@ -513,8 +513,8 @@ body{
     font-family: "Nunito Sans", sans-serif;
 }
 .taskBlock .priority{
-    width: 4%;
-    margin-right: 15px;
+    width: 2.8125rem;
+    margin-right: .9375rem;
     height: 100%;
 }
 .taskBlock label #checkbox{
