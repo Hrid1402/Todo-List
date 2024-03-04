@@ -141,7 +141,121 @@ body{
 
 /* Creation Dialog*/
 
+#projectDialog{
+    border: none;
+    height: 200px;
+    width: 500px;
+    padding: 15px;
+    background-color: #ffedc6;
+    border-radius: 25px;
+    border: solid 2px var(--fontColor);
+}
+#editProjectDialog{
+    border: none;
+    height: 120px;
+    width: 500px;
+    padding: 25px;
+    background-color: #ffedc6;
+    border-radius: 25px;
+    border: solid 2px var(--fontColor);
+}
 
+
+#editProjectDialog .editDialogContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    gap: 15%;
+}
+#editProjectDialog .editDialogContent label{
+    width: 100%;
+    justify-self: start;
+}
+#editProjectDialog .editDialogContent input{
+    width: 98%;
+    height: 30px;
+    font-size: 35px;
+    padding: 5px 3px;
+    color: var(--fontColor);
+    border: solid 1px var(--fontColor);
+    background-color: #fff9eb;
+    outline: none;
+}
+#editProjectDialog .editDialogContent .editButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+#editProjectDialog .editDialogContent .editButtons button{
+    padding: 10px 25px;
+    background-color: #ffd988;
+    border: none;
+    border-radius: 5px;
+    color: var(--fontColor);
+    font-size: 22px;
+}
+#editProjectDialog .editDialogContent .editButtons button:hover{
+    background-color: #ffc04a;
+}
+
+#projectDialog .dialogProjetContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 20%;
+}
+#projectDialog .dialogProjetContent div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#projectDialog .dialogProjetContent div h2{
+    margin-bottom: 15px;
+    margin-top: 2px;
+    color: var(--fontColor);
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 45px;
+}
+#projectDialog .dialogProjetContent div label{
+    width: 120%;
+    height: 120%;
+}
+#projectDialog .dialogProjetContent div input{
+    width: 100%;
+    height: 150%;
+    outline: none;
+    border: solid 1px var(--fontColor);
+    background-color: #fff9eb;
+    padding: 0 7px;
+    font-size: 20px;
+}
+#projectDialog .dialogProjetContent div input:hover, 
+#projectDialog .dialogProjetContent div input:active{
+    border: solid 2px var(--fontColor);
+}
+#projectDialog .dialogProjetContent button{
+    padding: 10px 25px;
+    background-color: #ffd988;
+    border: none;
+    border-radius: 5px;
+    color: var(--fontColor);
+    font-size: 22px;
+}
+#projectDialog .dialogProjetContent button:hover{
+    background-color: #ffc04a;
+}
+dialog::backdrop{
+    background-color: rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(3px);
+}
 #dialog{
     border: none;
     padding: 0;
@@ -378,9 +492,12 @@ body{
     flex-direction: column;
 }
 .projectsPart h1{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 30px;
     padding-left: 25px;
     color: var(--fontColor);
-    font-size: 2.5125rem;
+    font-size: 3.7125rem;
     font-family: "Nunito Sans", sans-serif;
 }
 .addProject{
@@ -394,11 +511,13 @@ body{
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 15px;
-    transition: transform 130ms;
+    transition: transform 130ms, margin-left 130ms;
     border: none;
+    padding-right: 10px;
 }
 .addProject:hover{
     transform: scale(1.1);
+    margin-left: 15px;
 }
 .addProject p{
     color: var(--fontColor);
@@ -420,10 +539,17 @@ body{
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 25px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    transition: background-color 130ms;
 }
 .project button:disabled{
-    background-color: #1f1f1f7d;
+    background-color: #fec95f8a;
 }
+.project button:hover{
+    border: solid 2px var(--topColor);
+}
+
 .project button p{
     color: var(--fontColor);
     font-size: 2.5125rem;
@@ -433,9 +559,10 @@ body{
 .project button img{
     width: 3.7375rem;
     height: 3.7375rem;
+    transition: transform 130ms;
 }
 .project button img:hover{
-    filter: invert(23%) sepia(95%) saturate(742%) hue-rotate(341deg) brightness(93%) contrast(86%);
+    transform: scale(1.25);
 }
 
 
