@@ -59,6 +59,24 @@ if(localStorage.getItem("notFirstTime") === null){
     actualProjectText.textContent = "Main";
     localStorage.setItem("notFirstTime", true);
 }
+else{
+    JSON.parse(localStorage.getItem("myProjectManager"));
+    console.log("ProjectTasks Local", JSON.parse(localStorage.getItem("myProjectManager")).projectsTasks);
+
+    projectManager.projectsTasks = JSON.parse(localStorage.getItem("myProjectManager")).projectsTasks;
+    createProjectsWithList(JSON.parse(localStorage.getItem("myProjectManager")).projects);
+    projectManager.projects = JSON.parse(localStorage.getItem("myProjectManager")).projects;
+    
+    console.log("ProjectTasks", projectManager.projectsTasks);
+
+    //Select Main
+    const mainbuttonjustforselect = document.querySelector("#projectButton").disabled = true;
+    const threeDotsDelete = document.querySelector("#projectButton img");
+    threeDotsDelete.remove();
+    actualProjectText.textContent = "Main";
+    createTaskFromArray(JSON.parse(localStorage.getItem("myProjectManager")).projectsTasks[0]);
+}
+
 
 
 //Ceate full DOM from array
@@ -151,12 +169,20 @@ function updateProject(){
         if(getIndexOfProject() == MyindexOfClickedProject) {
             actualProjectText.textContent = E_dialogText.value;
         }
+        //-------
+        localStorage.setItem("myProjectManager", JSON.stringify(projectManager));
+        //------
+
         dialogEditProject.close();
     }
     
     
 };
-
+function createProjectsWithList(projectsList){
+    projectsList.forEach(element => {
+        createProject(element);
+    });
+}
 function createProject(projectName){
     //DOM
     const projectDiv = document.createElement("div");
@@ -201,9 +227,10 @@ function createProject(projectName){
     projectDiv.setAttribute("id", "project");
     allProjects.insertBefore(projectDiv, addProjectBTN);
     projectManager.projectsTasks.push([]);
+
+
     localStorage.setItem("myProjectManager", JSON.stringify(projectManager));
 
-    console.log(JSON.parse(localStorage.getItem("myProjectManager")));
 };
 addProjectBTN.addEventListener("click",()=>{
     console.log("add Project Clicked");
@@ -256,8 +283,6 @@ createBTN.addEventListener("click",()=>{
         console.log("ProjectManager:", projectManager.projectsTasks);
         //ProjectManager
         localStorage.setItem("myProjectManager", JSON.stringify(projectManager));
-
-        console.log(JSON.parse(localStorage.getItem("myProjectManager")));
         //------
         dialog.close();
     }
@@ -309,9 +334,6 @@ function updateTask(){
         console.log(projectManager.projectsTasks[getIndexOfProject()]);
         //------------
         localStorage.setItem("myProjectManager", JSON.stringify(projectManager));
-
-        console.log(JSON.parse(localStorage.getItem("myProjectManager")));
-
         //------------
         descriptionDialog.close();
     }
@@ -414,8 +436,6 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
         }
         //-------
         localStorage.setItem("myProjectManager", JSON.stringify(projectManager));
-
-        console.log(JSON.parse(localStorage.getItem("myProjectManager")));
         //-------
     });
     label.appendChild(input);
@@ -463,8 +483,6 @@ function createTaskElements(titleValue, descriptionValue, dateValue, priorityVal
         projectManager.projectsTasks[getIndexOfProject()].splice(myIndex, 1);
         //----------
         localStorage.setItem("myProjectManager", JSON.stringify(projectManager));
-
-        console.log(JSON.parse(localStorage.getItem("myProjectManager")));
         //------------
         while (DOMtasks[myIndex].firstChild) {
             DOMtasks[myIndex].removeChild(DOMtasks[myIndex].firstChild);
@@ -535,6 +553,7 @@ class ProjectsManager{
     }
     deleteProject(index){
         this.projects.splice(index, 1); 
-        this.projectsTasks.splice(index, 1); 
+        this.projectsTasks.splice(index, 1);
+        localStorage.setItem("myProjectManager", JSON.stringify(projectManager));
     }
 }
